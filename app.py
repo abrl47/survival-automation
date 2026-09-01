@@ -1,5 +1,5 @@
 # app.py - Survival Automation Landing Page
-# "I replace your $500/mo Zapier stack with one Python system you own. $0 to run."
+# Merged: Keeps original design + SOS Banner + Cloud Ready
 
 import streamlit as st
 import time
@@ -61,6 +61,23 @@ st.markdown("""
         font-size: 0.8rem;
         border: 1px solid rgba(0, 255, 136, 0.2);
         margin: 0.2rem;
+    }
+    
+    /* SOS Banner - The "Fallback" */
+    .sos-banner {
+        background: #0a1a0f;
+        border: 1px solid #00FF88;
+        border-radius: 8px;
+        padding: 0.8rem 1.5rem;
+        text-align: center;
+        margin: 0.5rem 0 1rem 0;
+        font-size: 0.9rem;
+        color: #00FF88;
+    }
+    
+    .sos-banner .highlight {
+        font-weight: 700;
+        color: #00FF88;
     }
     
     /* Cards */
@@ -157,7 +174,6 @@ st.markdown("""
         transform: scale(0.98);
     }
     
-    /* Secondary button */
     .secondary-btn .stButton button {
         background: transparent !important;
         color: #00FF88 !important;
@@ -276,14 +292,23 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# --- HERO SECTION ---
+# --- SOS FALLBACK BANNER (NEW - Tells your story even without ngrok) ---
+st.markdown("""
+<div class="sos-banner">
+    📡 Built on <span class="highlight">SOS Data: 18.1 K/s</span> · 
+    If it runs on this, it runs anywhere. 💪
+</div>
+""", unsafe_allow_html=True)
+
+# --- MAIN CONTENT ---
 st.markdown('<div class="main">', unsafe_allow_html=True)
 
+# --- HERO SECTION ---
 col1, col2 = st.columns([2, 1])
 
 with col1:
     st.markdown("""
-    <div style="margin-top: 2rem;">
+    <div style="margin-top: 1rem;">
         <span class="badge">⚡ Python + Spite</span>
         <span class="badge">$0 Infra</span>
         <span class="badge">Built on Borrowed Laptop</span>
@@ -302,11 +327,9 @@ with col1:
     col_a, col_b = st.columns(2)
     with col_a:
         if st.button("⚡ See Live Bots", use_container_width=True):
-            st.session_state.scroll_to = "bots"
             st.balloons()
     with col_b:
         if st.button("💰 Book Build - $4-7K", use_container_width=True):
-            st.session_state.scroll_to = "contact"
             st.balloons()
 
 with col2:
@@ -317,7 +340,7 @@ with col2:
         border-radius: 12px;
         padding: 1.5rem;
         text-align: center;
-        margin-top: 2rem;
+        margin-top: 1rem;
     ">
         <div style="font-size: 3rem;">🔥</div>
         <div style="color: #00FF88; font-weight: 700; font-size: 1.2rem;">Survival Mode</div>
@@ -641,7 +664,6 @@ with st.container():
         
         if submitted:
             if name and pain:
-                # Store in session state (in production, this would go to Google Sheets)
                 st.balloons()
                 st.success(f"🔥 {name}! Let's fix your workflow. I'll reach out within 24 hours.")
                 st.info("📝 For demo purposes, this form stores data in session. In production, it writes to Google Sheets.")
