@@ -1,5 +1,5 @@
 # app.py - Survival Automation Landing Page
-# Merged: Keeps original design + SOS Banner + Cloud Ready
+# Permanent $0 deployment - Streamlit Cloud Ready
 
 import streamlit as st
 import time
@@ -11,6 +11,12 @@ st.set_page_config(
     page_icon="⚡",
     layout="wide",
     initial_sidebar_state="collapsed"
+)
+
+# Google Search Console verification
+st.markdown(
+    '<meta name="google-site-verification" content="8T7T-TcZtbw7cQjNeDV232admv4DD_PdwuCd812wE8s" />',
+    unsafe_allow_html=True
 )
 
 # Custom CSS - Dark Mode + Green Accent
@@ -292,7 +298,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# --- SOS FALLBACK BANNER (NEW - Tells your story even without ngrok) ---
+# --- SOS FALLBACK BANNER ---
 st.markdown("""
 <div class="sos-banner">
     📡 Built on <span class="highlight">SOS Data: 18.1 K/s</span> · 
