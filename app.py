@@ -13,7 +13,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Google Search Console verification (HTML tag method)
+# Google Search Console verification
 st.markdown(
     '<meta name="google-site-verification" content="8T7T-TcZtbw7cQjNeDV232admv4DD_PdwuCd812wE8s" />',
     unsafe_allow_html=True
@@ -34,14 +34,12 @@ st.markdown("""
         color: #e0e0e0;
     }
     
-    /* Main container */
     .main {
         max-width: 1200px;
         margin: 0 auto;
         padding: 2rem 1rem;
     }
     
-    /* Hero Section */
     .hero-title {
         font-size: 3.5rem;
         font-weight: 700;
@@ -69,7 +67,6 @@ st.markdown("""
         margin: 0.2rem;
     }
     
-    /* SOS Banner - The "Fallback" */
     .sos-banner {
         background: #0a1a0f;
         border: 1px solid #00FF88;
@@ -86,7 +83,6 @@ st.markdown("""
         color: #00FF88;
     }
     
-    /* Cards */
     .bot-card {
         background: #111;
         border: 1px solid #222;
@@ -123,7 +119,6 @@ st.markdown("""
         margin: 0.2rem 0;
     }
     
-    /* Pricing Cards */
     .pricing-card {
         background: #111;
         border: 1px solid #222;
@@ -159,7 +154,6 @@ st.markdown("""
         background: #0f1f15;
     }
     
-    /* Buttons */
     .stButton button {
         background: #00FF88 !important;
         color: #0a0a0a !important;
@@ -180,17 +174,6 @@ st.markdown("""
         transform: scale(0.98);
     }
     
-    .secondary-btn .stButton button {
-        background: transparent !important;
-        color: #00FF88 !important;
-        border: 1px solid #00FF88 !important;
-    }
-    
-    .secondary-btn .stButton button:hover {
-        background: rgba(0, 255, 136, 0.05) !important;
-    }
-    
-    /* Section headers */
     .section-title {
         font-size: 2.5rem;
         font-weight: 700;
@@ -205,7 +188,6 @@ st.markdown("""
         margin-bottom: 3rem;
     }
     
-    /* Stats */
     .stat-number {
         font-size: 3rem;
         font-weight: 700;
@@ -219,7 +201,6 @@ st.markdown("""
         font-size: 0.9rem;
     }
     
-    /* Footer */
     .footer {
         text-align: center;
         color: #444;
@@ -234,7 +215,6 @@ st.markdown("""
         font-weight: 700;
     }
     
-    /* Responsive */
     @media (max-width: 768px) {
         .hero-title {
             font-size: 2rem;
@@ -247,7 +227,6 @@ st.markdown("""
         }
     }
     
-    /* Contact form */
     .contact-form {
         background: #111;
         border-radius: 12px;
@@ -275,7 +254,6 @@ st.markdown("""
         font-size: 0.9rem !important;
     }
     
-    /* Tabs */
     .stTabs [data-baseweb="tab-list"] {
         gap: 1rem;
         background: #111;
@@ -298,11 +276,10 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# --- SOS FALLBACK BANNER ---
+# --- BORROWED LAPTOP BANNER ---
 st.markdown("""
 <div class="sos-banner">
-    📡 Built on <span class="highlight">SOS Data: 18.1 K/s</span> · 
-    If it runs on this, it runs anywhere. 💪
+    💪 <span class="highlight">Built on a borrowed laptop</span> — if it runs on this, it runs anywhere.
 </div>
 """, unsafe_allow_html=True)
 
@@ -325,7 +302,7 @@ with col1:
     
     st.markdown("""
     <p class="hero-sub">
-        Built on borrowed laptop + no SIM + Python + Spite. 10 bots, $0 infra.<br>
+        Zero-cost builds with Python + Spite on a borrowed laptop. 10 bots, $0 infra.<br>
         <span style="color: #555; font-size: 0.9rem;">Francis · Automation Engineer · CDO, PH</span>
     </p>
     """, unsafe_allow_html=True)
@@ -350,8 +327,8 @@ with col2:
     ">
         <div style="font-size: 3rem;">🔥</div>
         <div style="color: #00FF88; font-weight: 700; font-size: 1.2rem;">Survival Mode</div>
-        <div style="color: #666; font-size: 0.8rem;">No SIM · No Load · $0</div>
-        <div style="color: #444; font-size: 0.7rem; margin-top: 0.5rem;">SOS data: 18.1 K/s</div>
+        <div style="color: #666; font-size: 0.8rem;">Zero-cost builds · Python · Spite</div>
+        <div style="color: #444; font-size: 0.7rem; margin-top: 0.5rem;">Borrowed laptop. Still shipping.</div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -674,7 +651,6 @@ with st.container():
                 st.success(f"🔥 {name}! Let's fix your workflow. I'll reach out within 24 hours.")
                 st.info("📝 For demo purposes, this form stores data in session. In production, it writes to Google Sheets.")
                 
-                # Show what was submitted
                 with st.expander("📤 Form Data (For debugging)"):
                     st.json({
                         "name": name,
@@ -692,11 +668,10 @@ st.markdown("""
 <div class="footer">
     <div style="font-size: 1.2rem; margin-bottom: 0.5rem;">🐍 Built on Python + Spite</div>
     <div style="color: #555;">Francis · Automation Engineer · Cagayan de Oro, PH</div>
-    <div class="sos">📡 SOS Data: 18.1 K/s</div>
     <div style="color: #333; font-size: 0.7rem; margin-top: 0.5rem;">
-        If it runs on this, it runs anywhere. 💪
+        Borrowed laptop. Zero budget. Still shipping. 💪
     </div>
 </div>
 """, unsafe_allow_html=True)
 
-st.markdown('</div>', unsafe_allow_html=True)  # Close main container
+st.markdown('</div>', unsafe_allow_html=True)
