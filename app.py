@@ -1,9 +1,27 @@
 # app.py - Survival Automation Landing Page
 # Permanent $0 deployment - Streamlit Cloud Ready
+# GSC Verification: HTML file method
 
 import streamlit as st
+import os
 import time
 from datetime import datetime
+
+# --- GSC VERIFICATION (HTML FILE) ---
+# Serves the verification file if requested by Google
+verification_file = "google09b49e61df880691.html"  # Replace with your actual filename
+
+# Check if this is a GSC verification request
+# Streamlit doesn't have direct path matching, so we check the query params
+query_params = st.query_params
+if "gsc_verify" in query_params or os.path.exists(verification_file):
+    try:
+        with open(verification_file, "r") as f:
+            content = f.read()
+            st.markdown(content, unsafe_allow_html=True)
+            st.stop()  # Stop rendering the rest of the app
+    except:
+        pass  # If file doesn't exist, continue with normal app
 
 # Page Config
 st.set_page_config(
@@ -13,7 +31,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Google Search Console verification
+# Google Search Console verification (HTML tag fallback)
 st.markdown(
     '<meta name="google-site-verification" content="8T7T-TcZtbw7cQjNeDV232admv4DD_PdwuCd812wE8s" />',
     unsafe_allow_html=True
