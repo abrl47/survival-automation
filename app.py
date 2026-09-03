@@ -1,41 +1,17 @@
+# app.py - Survival Automation Landing Page
+# Permanent $0 deployment - Streamlit Cloud Ready
+
 import streamlit as st
-import os
+import time
+from datetime import datetime
 
-# --- GSC VERIFICATION (HTML FILE) ---
-# If Google requests the verification file, serve it RAW
-verification_file = "google09b49e61df880691.html"
-
-# Check if the verification file exists and serve it
-if os.path.exists(verification_file):
-    with open(verification_file, "r") as f:
-        content = f.read()
-        # Serve as raw HTML with NO Streamlit wrapper
-        st.set_page_config(
-            page_title="GSC Verify",
-            page_icon="",
-            layout="centered",
-            initial_sidebar_state="collapsed"
-        )
-        st.markdown(content, unsafe_allow_html=True)
-        st.stop()  # Stops rendering the rest of the app
-
-# --- NORMAL LANDING PAGE (if not verification request) ---
+# Page Config
 st.set_page_config(
     page_title="Survival Automation - Python + Spite",
     page_icon="⚡",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
-
-# Google Search Console meta tag (fallback)
-st.markdown(
-    '<meta name="google-site-verification" content="8T7T-TcZtbw7cQjNeDV232admv4DD_PdwuCd812wE8s" />',
-    unsafe_allow_html=True
-)
-
-# --- COPY YOUR FULL LANDING PAGE CODE HERE ---
-# (The complete landing page you already have)
-# I've included it below — scroll down
 
 # Custom CSS - Dark Mode + Green Accent
 st.markdown("""
@@ -52,12 +28,14 @@ st.markdown("""
         color: #e0e0e0;
     }
     
+    /* Main container */
     .main {
         max-width: 1200px;
         margin: 0 auto;
         padding: 2rem 1rem;
     }
     
+    /* Hero Section */
     .hero-title {
         font-size: 3.5rem;
         font-weight: 700;
@@ -85,6 +63,7 @@ st.markdown("""
         margin: 0.2rem;
     }
     
+    /* SOS Banner - The "Fallback" */
     .sos-banner {
         background: #0a1a0f;
         border: 1px solid #00FF88;
@@ -101,6 +80,7 @@ st.markdown("""
         color: #00FF88;
     }
     
+    /* Cards */
     .bot-card {
         background: #111;
         border: 1px solid #222;
@@ -137,6 +117,7 @@ st.markdown("""
         margin: 0.2rem 0;
     }
     
+    /* Pricing Cards */
     .pricing-card {
         background: #111;
         border: 1px solid #222;
@@ -172,6 +153,7 @@ st.markdown("""
         background: #0f1f15;
     }
     
+    /* Buttons */
     .stButton button {
         background: #00FF88 !important;
         color: #0a0a0a !important;
@@ -192,6 +174,17 @@ st.markdown("""
         transform: scale(0.98);
     }
     
+    .secondary-btn .stButton button {
+        background: transparent !important;
+        color: #00FF88 !important;
+        border: 1px solid #00FF88 !important;
+    }
+    
+    .secondary-btn .stButton button:hover {
+        background: rgba(0, 255, 136, 0.05) !important;
+    }
+    
+    /* Section headers */
     .section-title {
         font-size: 2.5rem;
         font-weight: 700;
@@ -206,6 +199,7 @@ st.markdown("""
         margin-bottom: 3rem;
     }
     
+    /* Stats */
     .stat-number {
         font-size: 3rem;
         font-weight: 700;
@@ -219,6 +213,7 @@ st.markdown("""
         font-size: 0.9rem;
     }
     
+    /* Footer */
     .footer {
         text-align: center;
         color: #444;
@@ -233,6 +228,7 @@ st.markdown("""
         font-weight: 700;
     }
     
+    /* Responsive */
     @media (max-width: 768px) {
         .hero-title {
             font-size: 2rem;
@@ -245,6 +241,7 @@ st.markdown("""
         }
     }
     
+    /* Contact form */
     .contact-form {
         background: #111;
         border-radius: 12px;
@@ -272,6 +269,7 @@ st.markdown("""
         font-size: 0.9rem !important;
     }
     
+    /* Tabs */
     .stTabs [data-baseweb="tab-list"] {
         gap: 1rem;
         background: #111;
@@ -294,7 +292,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# --- BORROWED LAPTOP BANNER ---
+# --- SOS FALLBACK BANNER ---
 st.markdown("""
 <div class="sos-banner">
     💪 <span class="highlight">Built on a borrowed laptop</span> — if it runs on this, it runs anywhere.
@@ -399,54 +397,15 @@ st.divider()
 st.markdown('<h2 class="section-title" id="bots">🤖 Live Bots</h2>', unsafe_allow_html=True)
 st.markdown('<p class="section-sub">All built with Python + Spite. $0 to run. You own them.</p>', unsafe_allow_html=True)
 
-tab1, tab2, tab3 = st.tabs(["🎯 Lead Hunter", "📈 SEO Automation", "🎙️ Voice Agent (Coming)"])
+tab1, tab2 = st.tabs(["📈 SEO Automation", "🎙️ Voice Agent (Coming)"])
 
 with tab1:
     col1, col2 = st.columns([2, 1])
     with col1:
         st.markdown("""
         <div class="bot-card">
-            <h3>🎯 Lead Hunter Bot</h3>
-            <p style="color: #aaa;">Scrapes job boards, filters 74 → 10 quality leads, scores them, sends to Telegram.</p>
-            <div>
-                <span class="stack">Python</span>
-                <span class="stack">BeautifulSoup</span>
-                <span class="stack">Telegram API</span>
-            </div>
-            <p class="cost">Cost to run: $0</p>
-            <p style="color: #666; font-size: 0.8rem;">No LinkedIn Sales Nav needed</p>
-        </div>
-        """, unsafe_allow_html=True)
-    with col2:
-        st.markdown("""
-        <div style="
-            background: #111;
-            border-radius: 12px;
-            padding: 1rem;
-            text-align: center;
-            border: 1px solid #222;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        ">
-            <div style="font-size: 4rem;">📊</div>
-            <div style="color: #00FF88; font-weight: 700;">74 → 10</div>
-            <div style="color: #666; font-size: 0.8rem;">Quality leads filtered</div>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    if st.button("💰 Want this bot? $4K build", key="lead_hunter_btn"):
-        st.balloons()
-        st.success("🔥 Let's build it! Contact me below.")
-
-with tab2:
-    col1, col2 = st.columns([2, 1])
-    with col1:
-        st.markdown("""
-        <div class="bot-card">
-            <h3>📈 SEO Automation Bot</h3>
-            <p style="color: #aaa;">Pulls GSC + DataForSEO, LLM generates self-optimizing pages, writes to Sheets, auto-deploys.</p>
+            <h3>📈 SEO Automation System</h3>
+            <p style="color: #aaa;">Turns GSC data into a ready-to-use content strategy in 15 minutes. Scores keywords, rejects bad ones, learns from mistakes.</p>
             <div>
                 <span class="stack">Python</span>
                 <span class="stack">GSC API</span>
@@ -454,7 +413,7 @@ with tab2:
                 <span class="stack">Streamlit</span>
             </div>
             <p class="cost">Cost to run: $0</p>
-            <p style="color: #666; font-size: 0.8rem;">Self-optimizing landing pages</p>
+            <p style="color: #666; font-size: 0.8rem;">Any niche. Any industry. 15 minutes.</p>
         </div>
         """, unsafe_allow_html=True)
     with col2:
@@ -471,16 +430,16 @@ with tab2:
             justify-content: center;
         ">
             <div style="font-size: 4rem;">📈</div>
-            <div style="color: #00FF88; font-weight: 700;">Self-Optimizing</div>
-            <div style="color: #666; font-size: 0.8rem;">Pages that rank</div>
+            <div style="color: #00FF88; font-weight: 700;">GSC → Content</div>
+            <div style="color: #666; font-size: 0.8rem;">15 minutes. Any niche.</div>
         </div>
         """, unsafe_allow_html=True)
     
-    if st.button("💰 Want this bot? $4K build", key="seo_bot_btn"):
+    if st.button("💰 Want this bot? $4-7K build", key="seo_bot_btn"):
         st.balloons()
-        st.success("🔥 Let's optimize! Contact me below.")
+        st.success("🔥 Let's build it! Contact me below.")
 
-with tab3:
+with tab2:
     col1, col2 = st.columns([2, 1])
     with col1:
         st.markdown("""
@@ -584,7 +543,7 @@ with col2:
         <div class="price">$4K</div>
         <div style="color: #666; font-size: 0.9rem;">1 custom bot</div>
         <div style="margin-top: 1rem;">
-            <div class="feature">✅ Lead Hunter or SEO Bot</div>
+            <div class="feature">✅ SEO Automation System</div>
             <div class="feature">✅ Full Python codebase</div>
             <div class="feature">✅ $0 to run forever</div>
             <div class="feature">✅ 48h delivery</div>
@@ -669,6 +628,7 @@ with st.container():
                 st.success(f"🔥 {name}! Let's fix your workflow. I'll reach out within 24 hours.")
                 st.info("📝 For demo purposes, this form stores data in session. In production, it writes to Google Sheets.")
                 
+                # Show what was submitted
                 with st.expander("📤 Form Data (For debugging)"):
                     st.json({
                         "name": name,
@@ -692,4 +652,4 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-st.markdown('</div>', unsafe_allow_html=True)
+st.markdown('</div>', unsafe_allow_html=True)  # Close main container
