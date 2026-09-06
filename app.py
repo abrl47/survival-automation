@@ -1,6 +1,5 @@
 # app.py - Survival Automation Landing Page
-# Permanent $0 deployment - Streamlit Cloud Ready
-# With Google Sheets contact form + hidden branding (native menu_items)
+# Final version: hides "Manage app" completely
 
 import streamlit as st
 import pandas as pd
@@ -19,8 +18,22 @@ st.set_page_config(
     }
 )
 
+# --- HIDE STREAMLIT TOOLBAR (CSS) ---
+st.markdown("""
+<style>
+div[data-testid="stToolbar"] {
+    display: none !important;
+}
+footer {
+    visibility: hidden !important;
+}
+header {
+    visibility: hidden !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
 # --- GSC VERIFICATION (HTML FILE) ---
-# (If you want to keep it, otherwise remove this block)
 verification_file = "google09b49e61df880691.html"
 import os
 if os.path.exists(verification_file):
@@ -29,7 +42,7 @@ if os.path.exists(verification_file):
         st.markdown(content, unsafe_allow_html=True)
         st.stop()
 
-# --- CUSTOM CSS ---
+# --- CUSTOM CSS (REST OF STYLES) ---
 st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
