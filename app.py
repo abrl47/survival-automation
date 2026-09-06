@@ -1,11 +1,12 @@
 # app.py - Survival Automation Landing Page
 # Permanent $0 deployment - Streamlit Cloud Ready
+# With Google Sheets contact form + hidden branding
 
 import streamlit as st
-import time
+import pandas as pd
 from datetime import datetime
 
-# Page Config
+# --- PAGE CONFIG ---
 st.set_page_config(
     page_title="Survival Automation - Python + Spite",
     page_icon="⚡",
@@ -13,10 +14,28 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Custom CSS - Dark Mode + Green Accent
+# --- HIDE STREAMLIT BRANDING ---
 st.markdown("""
 <style>
-    /* Import monospace font */
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+header {visibility: hidden;}
+</style>
+""", unsafe_allow_html=True)
+
+# --- GSC VERIFICATION (HTML FILE) ---
+# (If you want to keep it, otherwise remove this block)
+verification_file = "google09b49e61df880691.html"
+import os
+if os.path.exists(verification_file):
+    with open(verification_file, "r") as f:
+        content = f.read()
+        st.markdown(content, unsafe_allow_html=True)
+        st.stop()
+
+# --- CUSTOM CSS ---
+st.markdown("""
+<style>
     @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
     
     * {
@@ -28,14 +47,12 @@ st.markdown("""
         color: #e0e0e0;
     }
     
-    /* Main container */
     .main {
         max-width: 1200px;
         margin: 0 auto;
         padding: 2rem 1rem;
     }
     
-    /* Hero Section */
     .hero-title {
         font-size: 3.5rem;
         font-weight: 700;
@@ -63,7 +80,6 @@ st.markdown("""
         margin: 0.2rem;
     }
     
-    /* SOS Banner - The "Fallback" */
     .sos-banner {
         background: #0a1a0f;
         border: 1px solid #00FF88;
@@ -80,7 +96,6 @@ st.markdown("""
         color: #00FF88;
     }
     
-    /* Cards */
     .bot-card {
         background: #111;
         border: 1px solid #222;
@@ -117,7 +132,6 @@ st.markdown("""
         margin: 0.2rem 0;
     }
     
-    /* Pricing Cards */
     .pricing-card {
         background: #111;
         border: 1px solid #222;
@@ -153,7 +167,6 @@ st.markdown("""
         background: #0f1f15;
     }
     
-    /* Buttons */
     .stButton button {
         background: #00FF88 !important;
         color: #0a0a0a !important;
@@ -170,21 +183,6 @@ st.markdown("""
         box-shadow: 0 0 30px rgba(0, 255, 136, 0.2);
     }
     
-    .stButton button:active {
-        transform: scale(0.98);
-    }
-    
-    .secondary-btn .stButton button {
-        background: transparent !important;
-        color: #00FF88 !important;
-        border: 1px solid #00FF88 !important;
-    }
-    
-    .secondary-btn .stButton button:hover {
-        background: rgba(0, 255, 136, 0.05) !important;
-    }
-    
-    /* Section headers */
     .section-title {
         font-size: 2.5rem;
         font-weight: 700;
@@ -199,7 +197,6 @@ st.markdown("""
         margin-bottom: 3rem;
     }
     
-    /* Stats */
     .stat-number {
         font-size: 3rem;
         font-weight: 700;
@@ -213,7 +210,6 @@ st.markdown("""
         font-size: 0.9rem;
     }
     
-    /* Footer */
     .footer {
         text-align: center;
         color: #444;
@@ -223,25 +219,6 @@ st.markdown("""
         margin-top: 3rem;
     }
     
-    .footer .sos {
-        color: #00FF88;
-        font-weight: 700;
-    }
-    
-    /* Responsive */
-    @media (max-width: 768px) {
-        .hero-title {
-            font-size: 2rem;
-        }
-        .section-title {
-            font-size: 1.8rem;
-        }
-        .stat-number {
-            font-size: 2rem;
-        }
-    }
-    
-    /* Contact form */
     .contact-form {
         background: #111;
         border-radius: 12px;
@@ -269,7 +246,6 @@ st.markdown("""
         font-size: 0.9rem !important;
     }
     
-    /* Tabs */
     .stTabs [data-baseweb="tab-list"] {
         gap: 1rem;
         background: #111;
@@ -289,10 +265,22 @@ st.markdown("""
         background: rgba(0, 255, 136, 0.1);
         color: #00FF88;
     }
+    
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2rem;
+        }
+        .section-title {
+            font-size: 1.8rem;
+        }
+        .stat-number {
+            font-size: 2rem;
+        }
+    }
 </style>
 """, unsafe_allow_html=True)
 
-# --- SOS FALLBACK BANNER ---
+# --- SOS BANNER ---
 st.markdown("""
 <div class="sos-banner">
     💪 <span class="highlight">Built on a borrowed laptop</span> — if it runs on this, it runs anywhere.
@@ -302,7 +290,7 @@ st.markdown("""
 # --- MAIN CONTENT ---
 st.markdown('<div class="main">', unsafe_allow_html=True)
 
-# --- HERO SECTION ---
+# --- HERO ---
 col1, col2 = st.columns([2, 1])
 
 with col1:
@@ -357,12 +345,7 @@ col1, col2 = st.columns(2)
 
 with col1:
     st.markdown("""
-    <div style="
-        background: #1a0a0a;
-        border: 1px solid #441111;
-        border-radius: 12px;
-        padding: 2rem;
-    ">
+    <div style="background: #1a0a0a; border: 1px solid #441111; border-radius: 12px; padding: 2rem;">
         <h3 style="color: #ff4444; margin-top: 0;">❌ No-Code Way</h3>
         <ul style="color: #888; list-style: none; padding-left: 0;">
             <li style="padding: 0.5rem 0; border-bottom: 1px solid #1a1a1a;">💰 $30/mo per tool</li>
@@ -375,12 +358,7 @@ with col1:
 
 with col2:
     st.markdown("""
-    <div style="
-        background: #0a1a0f;
-        border: 1px solid #00FF88;
-        border-radius: 12px;
-        padding: 2rem;
-    ">
+    <div style="background: #0a1a0f; border: 1px solid #00FF88; border-radius: 12px; padding: 2rem;">
         <h3 style="color: #00FF88; margin-top: 0;">✅ Survival Way</h3>
         <ul style="color: #aaa; list-style: none; padding-left: 0;">
             <li style="padding: 0.5rem 0; border-bottom: 1px solid #1a1a1a;">💰 $0 to run</li>
@@ -393,7 +371,7 @@ with col2:
 
 st.divider()
 
-# --- LIVE BOTS SHOWCASE ---
+# --- LIVE BOTS ---
 st.markdown('<h2 class="section-title" id="bots">🤖 Live Bots</h2>', unsafe_allow_html=True)
 st.markdown('<p class="section-sub">All built with Python + Spite. $0 to run. You own them.</p>', unsafe_allow_html=True)
 
@@ -418,17 +396,7 @@ with tab1:
         """, unsafe_allow_html=True)
     with col2:
         st.markdown("""
-        <div style="
-            background: #111;
-            border-radius: 12px;
-            padding: 1rem;
-            text-align: center;
-            border: 1px solid #222;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        ">
+        <div style="background: #111; border-radius: 12px; padding: 1rem; text-align: center; border: 1px solid #222; height: 100%; display: flex; flex-direction: column; justify-content: center;">
             <div style="font-size: 4rem;">📈</div>
             <div style="color: #00FF88; font-weight: 700;">GSC → Content</div>
             <div style="color: #666; font-size: 0.8rem;">15 minutes. Any niche.</div>
@@ -458,17 +426,7 @@ with tab2:
         """, unsafe_allow_html=True)
     with col2:
         st.markdown("""
-        <div style="
-            background: #111;
-            border-radius: 12px;
-            padding: 1rem;
-            text-align: center;
-            border: 1px solid #222;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        ">
+        <div style="background: #111; border-radius: 12px; padding: 1rem; text-align: center; border: 1px solid #222; height: 100%; display: flex; flex-direction: column; justify-content: center;">
             <div style="font-size: 4rem;">🎙️</div>
             <div style="color: #00FF88; font-weight: 700;">Coming Soon</div>
             <div style="color: #666; font-size: 0.8rem;">$0 Voice Agent</div>
@@ -568,7 +526,7 @@ with col3:
 
 st.divider()
 
-# --- PROOF / STATS ---
+# --- PROOF ---
 st.markdown('<h2 class="section-title">📊 Proof</h2>', unsafe_allow_html=True)
 
 col1, col2, col3, col4 = st.columns(4)
@@ -605,7 +563,7 @@ st.markdown("""
 
 st.divider()
 
-# --- CONTACT FORM ---
+# --- CONTACT FORM (SAVES TO GOOGLE SHEETS) ---
 st.markdown('<h2 class="section-title" id="contact">📩 Let\'s Build</h2>', unsafe_allow_html=True)
 st.markdown('<p class="section-sub">Describe your pain. I\'ll rebuild it in Python. $4-7K. You own it.</p>', unsafe_allow_html=True)
 
@@ -624,18 +582,31 @@ with st.container():
         
         if submitted:
             if name and pain:
-                st.balloons()
-                st.success(f"🔥 {name}! Let's fix your workflow. I'll reach out within 24 hours.")
-                st.info("📝 For demo purposes, this form stores data in session. In production, it writes to Google Sheets.")
-                
-                # Show what was submitted
-                with st.expander("📤 Form Data (For debugging)"):
-                    st.json({
+                try:
+                    # --- SAVE TO GOOGLE SHEETS ---
+                    from modules.sheets import GoogleSheetsIntegration
+                    import pandas as pd
+                    
+                    # Use your existing sheet credentials and ID
+                    SHEET_ID = "1Jz7A-SjaBdzfOGyhFS27VWrV42aqr924dHSLWa4YUZ8"
+                    sheets = GoogleSheetsIntegration("sheets_credentials.json")
+                    
+                    data = pd.DataFrame([{
+                        "timestamp": datetime.now().isoformat(),
                         "name": name,
                         "pain": pain,
-                        "budget": budget,
-                        "timestamp": datetime.now().isoformat()
-                    })
+                        "budget": budget
+                    }])
+                    sheets.write_dataframe(SHEET_ID, "leads", data)
+                    
+                    st.balloons()
+                    st.success(f"🔥 {name}! Let's fix your workflow. I'll reach out within 24 hours.")
+                    st.info("✅ Your message was saved to Google Sheets.")
+                    
+                except Exception as e:
+                    st.error(f"❌ Failed to save to Google Sheets: {str(e)}")
+                    st.info("📝 Your message was received, but the sheet wasn't updated. I'll manually check.")
+                    st.json({"name": name, "pain": pain, "budget": budget})
             else:
                 st.error("⚠️ Please fill in at least Name and Pain fields.")
     
@@ -652,4 +623,4 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-st.markdown('</div>', unsafe_allow_html=True)  # Close main container
+st.markdown('</div>', unsafe_allow_html=True)
