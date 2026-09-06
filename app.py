@@ -1,11 +1,11 @@
 # app.py - Survival Automation Landing Page
-# Final version: Meta tag verification + hide toolbar
+# Final version: JavaScript to hide "Manage app"
 
 import streamlit as st
 import pandas as pd
 from datetime import datetime
 
-# --- PAGE CONFIG (HIDE MENU ITEMS) ---
+# --- PAGE CONFIG ---
 st.set_page_config(
     page_title="Survival Automation - Python + Spite",
     page_icon="⚡",
@@ -24,7 +24,27 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# --- HIDE STREAMLIT TOOLBAR (CSS) ---
+# --- JAVASCRIPT TO HIDE "MANAGE APP" ---
+st.markdown("""
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Try to hide the toolbar
+    const toolbar = document.querySelector('[data-testid="stToolbar"]');
+    if (toolbar) {
+        toolbar.style.display = 'none';
+    }
+    // Also try to hide any button with "Manage app" text
+    const buttons = document.querySelectorAll('button');
+    buttons.forEach(function(btn) {
+        if (btn.innerText && btn.innerText.includes('Manage app')) {
+            btn.style.display = 'none';
+        }
+    });
+});
+</script>
+""", unsafe_allow_html=True)
+
+# --- ALSO ADD CSS AS BACKUP ---
 st.markdown("""
 <style>
 div[data-testid="stToolbar"] {
@@ -35,6 +55,9 @@ footer {
 }
 header {
     visibility: hidden !important;
+}
+.stApp > header {
+    display: none !important;
 }
 </style>
 """, unsafe_allow_html=True)
