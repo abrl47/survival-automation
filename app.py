@@ -1,27 +1,23 @@
 # app.py - Survival Automation Landing Page
 # Permanent $0 deployment - Streamlit Cloud Ready
-# With Google Sheets contact form + hidden branding (stronger CSS)
+# With Google Sheets contact form + hidden branding (native menu_items)
 
 import streamlit as st
 import pandas as pd
 from datetime import datetime
 
-# --- PAGE CONFIG ---
+# --- PAGE CONFIG (HIDE MENU ITEMS) ---
 st.set_page_config(
     page_title="Survival Automation - Python + Spite",
     page_icon="⚡",
     layout="wide",
-    initial_sidebar_state="collapsed"
+    initial_sidebar_state="collapsed",
+    menu_items={
+        'Get Help': None,
+        'Report a Bug': None,
+        'About': None
+    }
 )
-
-# --- HIDE STREAMLIT BRANDING (STRONGER) ---
-st.markdown("""
-<style>
-#MainMenu {display: none !important;}
-footer {display: none !important;}
-header {display: none !important;}
-</style>
-""", unsafe_allow_html=True)
 
 # --- GSC VERIFICATION (HTML FILE) ---
 # (If you want to keep it, otherwise remove this block)
