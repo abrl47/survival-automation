@@ -1,6 +1,6 @@
 # app.py - Survival Automation Landing Page
 # Permanent $0 deployment - Streamlit Cloud Ready
-# With Google Sheets contact form + hidden branding
+# With Google Sheets contact form + hidden branding (stronger CSS)
 
 import streamlit as st
 import pandas as pd
@@ -14,12 +14,12 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# --- HIDE STREAMLIT BRANDING ---
+# --- HIDE STREAMLIT BRANDING (STRONGER) ---
 st.markdown("""
 <style>
-#MainMenu {visibility: hidden;}
-footer {visibility: hidden;}
-header {visibility: hidden;}
+#MainMenu {display: none !important;}
+footer {display: none !important;}
+header {display: none !important;}
 </style>
 """, unsafe_allow_html=True)
 
@@ -585,9 +585,7 @@ with st.container():
                 try:
                     # --- SAVE TO GOOGLE SHEETS ---
                     from modules.sheets import GoogleSheetsIntegration
-                    import pandas as pd
                     
-                    # Use your existing sheet credentials and ID
                     SHEET_ID = "1Jz7A-SjaBdzfOGyhFS27VWrV42aqr924dHSLWa4YUZ8"
                     sheets = GoogleSheetsIntegration("sheets_credentials.json")
                     
