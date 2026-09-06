@@ -1,5 +1,5 @@
 # app.py - Survival Automation Landing Page
-# Final version: hides "Manage app" completely
+# Final version: Meta tag verification + hide toolbar
 
 import streamlit as st
 import pandas as pd
@@ -18,6 +18,12 @@ st.set_page_config(
     }
 )
 
+# --- GSC VERIFICATION (META TAG) ---
+st.markdown(
+    '<meta name="google-site-verification" content="8T7T-TcZtbw7cQjNeDV232admv4DD_PdwuCd812wE8s" />',
+    unsafe_allow_html=True
+)
+
 # --- HIDE STREAMLIT TOOLBAR (CSS) ---
 st.markdown("""
 <style>
@@ -32,15 +38,6 @@ header {
 }
 </style>
 """, unsafe_allow_html=True)
-
-# --- GSC VERIFICATION (HTML FILE) ---
-verification_file = "google09b49e61df880691.html"
-import os
-if os.path.exists(verification_file):
-    with open(verification_file, "r") as f:
-        content = f.read()
-        st.markdown(content, unsafe_allow_html=True)
-        st.stop()
 
 # --- CUSTOM CSS (REST OF STYLES) ---
 st.markdown("""
